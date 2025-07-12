@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate-docker-compose:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+    
+    - name: Validate Docker Compose files
+      run: |
+        echo "🔍 Validating Docker Compose files..."
+        for file in $(find . -name "docker-compose.yml" -type f); do
+          echo "Validating: $file"
+          docker compose -f "$file" config
+          if [ $? -eq 0 ]; then
+            echo "✅ $file is valid"
+          else
+            echo "❌ $file has errors"
+            exit 1
+          fi
+        done
+        echo "🎉 All Docker Compose files are valid!"
+    
+    - name: Check for required files
+      run: |
+        echo "📋 Checking for required files..."
+        for demo in 01-* 02-* 03-* 04-* 05-*; do
+          if [ -d "$demo" ]; then
+            echo "Checking demo: $demo"
+            if [ ! -f "$demo/README.md" ]; then
+              echo "❌ Missing README.md in $demo"
+              exit 1
+            fi
+            if [ ! -f "$demo/docker-compose.yml" ]; then
+              echo "❌ Missing docker-compose.yml in $demo"
+              exit 1
+            fi
+            echo "✅ $demo has required files"
+          fi
+        done
+        echo "🎉 All demos have required files!" 

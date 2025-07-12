@@ -1,6 +1,21 @@
 # Great Expectations with S3 Demo
 
-A 10-minute demo showing how to set up data quality validation using Great Expectations with MinIO (S3-compatible storage).
+A 10-minute demo showing how to set up data quality validation with Great Expectations and S3-compatible storage using MinIO.
+
+## 📊 Data Quality Flow
+
+```
+┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐
+│   Raw Data  │───▶│  Validation │───▶│  Great      │───▶│  Quality    │
+│   (CSV)     │    │   Engine    │    │ Expectations │    │  Reports    │
+└─────────────┘    └─────────────┘    └─────────────┘    └─────────────┘
+                          │                    │
+                          ▼                    ▼
+                   ┌─────────────┐    ┌─────────────┐
+                   │    MinIO    │    │  Validation │
+                   │   (S3)      │    │   Results   │
+                   └─────────────┘    └─────────────┘
+```
 
 ## 🚀 Quick Start
 
@@ -17,20 +32,20 @@ cd 02-great-expectations-s3
 # Start MinIO and Great Expectations
 docker-compose up -d
 
-# Install Great Expectations
-pip install great-expectations
+# Install dependencies
+pip install great-expectations boto3 pandas
 ```
 
-### 2. Initialize Great Expectations
+### 2. Set Up Great Expectations
 ```bash
-# Initialize Great Expectations project
+# Initialize Great Expectations
 great_expectations init
 
-# Configure MinIO as a data source
-python scripts/setup_gx.py
+# Configure S3 connection
+python scripts/setup_ge.py
 ```
 
-### 3. Run the Demo
+### 3. Run Data Quality Checks
 ```bash
 # Generate sample data
 python scripts/generate_data.py
@@ -46,66 +61,65 @@ python scripts/validate_data.py
 
 1. **MinIO Setup**: S3-compatible object storage
 2. **Great Expectations**: Data quality validation framework
-3. **Sample Data**: CSV files with various data quality issues
-4. **Expectations**: Data quality rules and validations
-5. **Validation Results**: Automated data quality reports
+3. **Expectation Creation**: Defining data quality rules
+4. **Validation Pipeline**: Automated quality checks
+5. **Quality Reports**: HTML reports with validation results
 
 ## 📁 Project Structure
 
 ```
-data/                    # Sample CSV files
-├── clean_data.csv      # Valid data
-└── dirty_data.csv      # Data with quality issues
+data/
+├── clean/            # Clean sample data
+│   └── customers.csv
+└── dirty/           # Data with quality issues
+    └── customers_dirty.csv
 
-expectations/            # Great Expectations configs
-└── ge_config/
-
-notebooks/              # Jupyter notebooks
-└── data_quality_analysis.ipynb
-
-scripts/                # Automation scripts
-├── setup_gx.py
-├── generate_data.py
+scripts/
+├── setup_ge.py      # Great Expectations setup
+├── generate_data.py # Sample data generation
 ├── create_expectations.py
 └── validate_data.py
+
+notebooks/
+└── data_quality_analysis.ipynb
 ```
 
 ## 🎯 Key Concepts Demonstrated
 
-- **Data Quality**: Validating data integrity and consistency
-- **Great Expectations**: Modern data quality framework
-- **S3 Storage**: Cloud-native data storage
-- **Automated Validation**: CI/CD for data quality
-- **Expectation Suites**: Reusable validation rules
+- **Data Quality**: Automated validation of data
+- **Expectations**: Defining data quality rules
+- **Validation**: Running quality checks
+- **Reports**: HTML quality reports
+- **S3 Integration**: Cloud storage compatibility
 
 ## 🔗 Service Access
 
 - **MinIO Console**: `http://localhost:9001`
   - Username: `minioadmin`
   - Password: `minioadmin`
-- **Great Expectations Docs**: `http://localhost:8080`
+- **Great Expectations**: Local filesystem
 
 ## 🚀 Next Steps
 
-1. Add more complex data quality rules
-2. Integrate with CI/CD pipelines
-3. Set up automated alerts
-4. Create custom expectations
-5. Add data profiling
+1. Add more complex expectations
+2. Set up automated validation
+3. Integrate with CI/CD
+4. Add alerting for failures
+5. Create custom expectations
 
 ## 🐛 Troubleshooting
 
-**MinIO Connection Issues**: Ensure containers are running
+**MinIO Issues**: Check container status
 ```bash
 docker-compose ps
 ```
 
-**Great Expectations Issues**: Check the configuration
+**Great Expectations Issues**: Verify configuration
 ```bash
 great_expectations --version
 ```
 
-**Data Validation Issues**: Check the sample data format
+**Data Issues**: Check file permissions
 ```bash
-head -5 data/clean_data.csv
+ls -la data/
 ``` 

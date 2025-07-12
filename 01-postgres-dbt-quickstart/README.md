@@ -2,6 +2,21 @@
 
 A 10-minute demo showing how to set up a data warehouse with PostgreSQL and dbt, including seed data and basic transformations.
 
+## 📊 Data Flow Overview
+
+```
+┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐
+│   CSV Data  │───▶│   dbt Seed  │───▶│ Staging     │───▶│ Mart Models │
+│ (seeds/)    │    │             │    │ Models      │    │ (marts/)    │
+└─────────────┘    └─────────────┘    └─────────────┘    └─────────────┘
+                                                              │
+                                                              ▼
+                                                    ┌─────────────┐
+                                                    │ PostgreSQL  │
+                                                    │ Warehouse   │
+                                                    └─────────────┘
+```
+
 ## 🚀 Quick Start
 
 ### Prerequisites
@@ -65,6 +80,13 @@ models/
 
 seeds/               # CSV files to load
 └── raw_customers.csv
+
+macros/              # Reusable SQL macros
+└── generate_schema_name.sql
+
+scripts/             # Automation scripts
+├── setup.sh
+└── demo.sh
 ```
 
 ## 🎯 Key Concepts Demonstrated

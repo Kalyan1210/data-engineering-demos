@@ -1,6 +1,21 @@
 # FastAPI + MLflow Tracking Demo
 
-A 10-minute demo showing how to build a machine learning API with FastAPI and track experiments using MLflow.
+A 10-minute demo showing how to build a FastAPI application with MLflow for model tracking and serving.
+
+## 📊 ML Pipeline Flow
+
+```
+┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐
+│ Training    │───▶│  MLflow     │───▶│  FastAPI    │───▶│  Model      │
+│ Data        │    │  Tracking   │    │  Server     │    │  Serving    │
+└─────────────┘    └─────────────┘    └─────────────┘    └─────────────┘
+                          │                    │
+                          ▼                    ▼
+                   ┌─────────────┐    ┌─────────────┐
+                   │  MLflow UI  │    │  API Docs   │
+                   │  (Port 5000)│    │  (Port 8000)│
+                   └─────────────┘    └─────────────┘
+```
 
 ## 🚀 Quick Start
 
@@ -14,107 +29,91 @@ A 10-minute demo showing how to build a machine learning API with FastAPI and tr
 # Navigate to the demo
 cd 03-fastapi-mlflow
 
-# Start MLflow and FastAPI services
+# Start MLflow and PostgreSQL
 docker-compose up -d
 
 # Install dependencies
-pip install fastapi uvicorn mlflow scikit-learn pandas numpy
+pip install fastapi uvicorn mlflow scikit-learn pandas
 ```
 
 ### 2. Train and Track Models
 ```bash
-# Train a sample model with MLflow tracking
-python scripts/train_model.py
+# Generate sample data
+python scripts/generate_data.py
 
-# View experiments in MLflow UI
-# Open http://localhost:5000
+# Train models with MLflow tracking
+python scripts/train_models.py
 ```
 
 ### 3. Start the FastAPI Server
 ```bash
-# Start the FastAPI application
+# Start the API server
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
-
-# API will be available at http://localhost:8000
-# Documentation at http://localhost:8000/docs
 ```
 
 ## 📊 What This Demo Shows
 
-1. **FastAPI Setup**: Modern Python web framework for APIs
-2. **MLflow Tracking**: Experiment tracking and model versioning
-3. **Model Training**: Sample ML pipeline with scikit-learn
-4. **API Endpoints**: RESTful API for model predictions
-5. **Experiment Management**: MLflow UI for experiment tracking
+1. **FastAPI Setup**: Modern Python web framework
+2. **MLflow Tracking**: Model experiment tracking
+3. **Model Training**: Automated model training pipeline
+4. **API Serving**: RESTful model serving
+5. **Experiment Management**: MLflow UI for experiments
 
 ## 📁 Project Structure
 
 ```
-app/                    # FastAPI application
-├── main.py            # FastAPI app entry point
-├── models.py          # ML model utilities
-└── schemas.py         # Pydantic schemas
+app/
+├── main.py           # FastAPI application
+├── models.py         # ML model definitions
+└── schemas.py        # Pydantic schemas
 
-models/                 # Trained models
-└── model_registry/
+scripts/
+├── generate_data.py  # Sample data generation
+└── train_models.py   # Model training script
 
-data/                   # Sample datasets
-├── train.csv          # Training data
-└── test.csv           # Test data
-
-notebooks/             # Jupyter notebooks
+notebooks/
 └── model_experiments.ipynb
 
-scripts/               # Automation scripts
-├── train_model.py     # Model training script
-├── generate_data.py   # Data generation
-└── evaluate_model.py  # Model evaluation
+data/
+└── training_data.csv
 ```
 
 ## 🎯 Key Concepts Demonstrated
 
-- **FastAPI**: Modern, fast web framework for APIs
-- **MLflow Tracking**: Experiment tracking and model management
-- **Model Versioning**: Version control for ML models
-- **RESTful APIs**: Clean API design with automatic docs
-- **Experiment Management**: Reproducible ML experiments
+- **FastAPI**: Modern async web framework
+- **MLflow Tracking**: Experiment tracking and model registry
+- **Model Serving**: RESTful API for model predictions
+- **Data Validation**: Pydantic schemas for API validation
+- **Experiment Management**: MLflow UI for experiment tracking
 
 ## 🔗 Service Access
 
 - **FastAPI**: `http://localhost:8000`
-- **FastAPI Docs**: `http://localhost:8000/docs`
+- **API Docs**: `http://localhost:8000/docs`
 - **MLflow UI**: `http://localhost:5000`
-- **MLflow API**: `http://localhost:5000/api`
-
-## 🚀 API Endpoints
-
-- `GET /`: Health check
-- `POST /predict`: Make predictions
-- `GET /models`: List available models
-- `GET /experiments`: List MLflow experiments
-- `POST /train`: Trigger model training
+- **PostgreSQL**: `localhost:5432`
 
 ## 🚀 Next Steps
 
-1. Add more complex ML models
-2. Implement model A/B testing
-3. Add authentication and authorization
-4. Set up automated model deployment
-5. Integrate with CI/CD pipeline
+1. Add model versioning
+2. Implement A/B testing
+3. Add model monitoring
+4. Set up automated retraining
+5. Add authentication
 
 ## 🐛 Troubleshooting
 
-**MLflow Connection Issues**: Ensure containers are running
+**MLflow Issues**: Check container status
 ```bash
 docker-compose ps
 ```
 
-**FastAPI Issues**: Check the application logs
+**FastAPI Issues**: Check server logs
 ```bash
 uvicorn app.main:app --reload --log-level debug
 ```
 
-**Model Training Issues**: Check MLflow tracking URI
+**Model Issues**: Verify MLflow tracking
 ```bash
-mlflow ui --host 0.0.0.0 --port 5000
+mlflow ui --port 5000
 ``` 
