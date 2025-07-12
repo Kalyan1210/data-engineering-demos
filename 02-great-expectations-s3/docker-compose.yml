@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  minio:
+    image: minio/minio:latest
+    container_name: minio_gx_demo
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    command: server /data --console-address ":9001"
+    volumes:
+      - minio_data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+
+  great-expectations:
+    image: great-expectations/great-expectations:latest
+    container_name: gx_docs_demo
+    ports:
+      - "8080:8080"
+    environment:
+      - GE_DOCS_SITE_URL=http://localhost:8080
+    volumes:
+      - ./expectations:/opt/great_expectations/expectations
+    depends_on:
+      minio:
+        condition: service_healthy
+
+volumes:
+  minio_data: 

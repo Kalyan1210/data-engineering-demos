@@ -1,0 +1,16 @@
+id,name,email,age,salary,department,hire_date,is_active
+1,John Doe,john.doe@company.com,30,75000,Engineering,2023-01-15,true
+2,Jane Smith,jane.smith@company.com,28,72000,Marketing,2023-02-20,true
+3,Bob Johnson,bob.johnson@company.com,35,85000,Sales,2023-03-10,true
+4,Alice Brown,alice.brown@company.com,32,78000,Engineering,2023-04-05,true
+5,Charlie Wilson,charlie.wilson@company.com,29,70000,Marketing,2023-05-12,true
+6,Diana Davis,diana.davis@company.com,31,76000,Sales,2023-06-18,true
+7,Edward Miller,edward.miller@company.com,33,82000,Engineering,2023-07-22,true
+8,Fiona Garcia,fiona.garcia@company.com,27,68000,Marketing,2023-08-30,true
+9,George Martinez,george.martinez@company.com,34,88000,Sales,2023-09-14,true
+10,Helen Rodriguez,helen.rodriguez@company.com,30,75000,Engineering,2023-10-25,true
+11,Invalid Name,invalid-email,150,999999,Invalid Dept,2023-11-01,maybe
+12,Another Person,another@company.com,25,50000,Engineering,2023-12-01,false
+13,,empty@company.com,,,Finance,2023-12-15,true
+14,Test Person,test@company.com,30,75000,Engineering,invalid-date,true
+15,Last Person,last@company.com,30,75000,Engineering,2023-12-31,true 
