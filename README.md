@@ -10,12 +10,12 @@ A collection of 10-minute demos showcasing modern data engineering tools and pra
 | 02  | Great Expectations with S3 | ✅ Complete | Data quality validation |
 | 03  | FastAPI + MLflow tracking | ✅ Complete | ML model serving & tracking |
 | 04  | Airbyte to DuckDB | ✅ Complete | Data integration & warehousing |
-| 05  | Streamlit → Grafana | 🚧 In Progress | Real-time metrics & visualization |
-| 06  | Kafka + Spark Structured Streaming | 🚧 Coming Soon | Real-time streaming |
-| 07  | Superset + SQLite | 🚧 Coming Soon | Business intelligence |
-| 08  | Prefect 3 local deployment | 🚧 Coming Soon | Workflow orchestration |
-| 09  | BentoML model server | 🚧 Coming Soon | Model serving platform |
-| 10  | Trino + Iceberg demo | 🚧 Coming Soon | Lakehouse architecture |
+| 05  | Streamlit → Grafana | ✅ Complete | Real-time metrics & visualization |
+| 06  | Kafka + Spark Structured Streaming | ✅ Complete | Real-time streaming |
+| 07  | Superset + SQLite | ✅ Complete | Business intelligence |
+| 08  | Prefect 3 local deployment | ✅ Complete | Workflow orchestration |
+| 09  | Dagster data assets | ✅ Complete | Asset-based orchestration & lineage |
+| 10  | Snowflake + dbt Cloud | 🚧 In Progress | Cloud data warehouse & transformation |
 
 ## 🚀 Quick Start
 
@@ -32,8 +32,8 @@ cd 01-postgres-dbt-quickstart
 
 | Category | Tools |
 |----------|-------|
-| **Databases** | PostgreSQL, DuckDB, SQLite |
-| **ETL/ELT** | dbt, Airbyte, Prefect |
+| **Databases** | PostgreSQL, DuckDB, SQLite, Snowflake |
+| **ETL/ELT** | dbt, Airbyte, Prefect, Dagster |
 | **Data Quality** | Great Expectations |
 | **ML/AI** | MLflow, BentoML, spaCy |
 | **Streaming** | Kafka, Spark |
@@ -44,12 +44,13 @@ cd 01-postgres-dbt-quickstart
 
 These demos follow a logical progression:
 
-1. **Data Storage** (Postgres, DuckDB)
+1. **Data Storage** (Postgres, DuckDB, Snowflake)
 2. **Data Transformation** (dbt, Airbyte)
 3. **Data Quality** (Great Expectations)
 4. **ML Pipeline** (MLflow, BentoML)
 5. **Streaming** (Kafka, Spark)
-6. **Visualization** (Grafana, Superset)
+6. **Orchestration** (Prefect, Dagster)
+7. **Visualization** (Grafana, Superset)
 
 ## 🤝 Contributing
 
