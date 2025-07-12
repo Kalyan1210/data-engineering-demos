@@ -1,0 +1,30 @@
+name: 'postgres_demo'
+version: '1.0.0'
+config-version: 2
+
+profile: 'postgres_demo'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  postgres_demo:
+    staging:
+      +materialized: view
+    marts:
+      +materialized: table
+
+seeds:
+  postgres_demo:
+    +column_types:
+      customer_id: integer
+      created_at: timestamp 
