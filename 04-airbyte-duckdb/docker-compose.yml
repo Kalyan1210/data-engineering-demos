@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  airbyte-db:
+    image: postgres:13
+    container_name: airbyte_db
+    environment:
+      POSTGRES_DB: airbyte
+      POSTGRES_USER: airbyte
+      POSTGRES_PASSWORD: airbyte
+    volumes:
+      - airbyte_db:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  airbyte-server:
+    image: airbyte/server:latest
+    container_name: airbyte_server
+    environment:
+      DATABASE_URL: jdbc:postgresql://airbyte-db:5432/airbyte
+      DATABASE_USER: airbyte
+      DATABASE_PASSWORD: airbyte
+    ports:
+      - "8000:8000"
+    depends_on:
+      - airbyte-db
+    volumes:
+      - airbyte_workspace:/tmp/workspace
+
+  airbyte-webapp:
+    image: airbyte/webapp:latest
+    container_name: airbyte_webapp
+    ports:
+      - "3000:3000"
+    depends_on:
+      - airbyte-server
+
+  duckdb:
+    image: python:3.9-slim
+    container_name: duckdb_warehouse
+    working_dir: /app
+    volumes:
+      - ./data:/app/data
+      - ./scripts:/app/scripts
+    command: >
+      bash -c "pip install duckdb pandas &&
+               python scripts/setup_duckdb.py &&
+               tail -f /dev/null"
+
+volumes:
+  airbyte_db:
+  airbyte_workspace: 
