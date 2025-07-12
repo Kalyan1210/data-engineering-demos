@@ -2,6 +2,15 @@
 
 A 10-minute demo showing how to build a Streamlit app that generates metrics and pushes them to Prometheus for visualization in Grafana.
 
+## 📊 Data Flow Overview
+
+```
+┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐
+│ Streamlit   │───▶│ Prometheus  │───▶│ Grafana     │───▶│ Dashboards  │
+│ App         │    │ Metrics DB  │    │ Visualization│    │ & Alerts    │
+└─────────────┘    └─────────────┘    └─────────────┘    └─────────────┘
+```
+
 ## 🚀 Quick Start
 
 ### Prerequisites
@@ -33,33 +42,38 @@ streamlit run app/main.py --server.port 8501
   - Username: `admin`
   - Password: `admin`
 
-## 📊 What This Demo Shows
-
-1. **Streamlit App**: Interactive web application for data generation
-2. **Prometheus**: Metrics collection and storage
-3. **Grafana**: Data visualization and dashboards
-4. **Real-time Metrics**: Live metric generation and monitoring
-5. **Custom Dashboards**: Building visualizations in Grafana
-
 ## 📁 Project Structure
 
 ```
-app/                    # Streamlit application
-├── main.py            # Main Streamlit app
-├── metrics.py         # Prometheus metrics
-└── data_generator.py  # Sample data generation
+app/
+├── main.py           # Main Streamlit app
+├── metrics.py        # Prometheus metrics
+├── data_generator.py # Sample data generation
+├── requirements.txt  # Python dependencies
+├── Dockerfile        # Streamlit app Dockerfile
 
-configs/               # Configuration files
-├── prometheus.yml     # Prometheus configuration
-└── grafana/          # Grafana dashboards
+configs/
+├── prometheus.yml    # Prometheus configuration
+└── grafana/
+    ├── datasources.yml      # Grafana data source provisioning
+    └── sample_dashboard.json# Sample dashboard
 
-scripts/               # Automation scripts
-├── setup_grafana.py   # Grafana setup
-└── generate_data.py   # Data generation
+scripts/
+├── setup_grafana.py  # Grafana dashboard setup
+└── generate_data.py  # Data generation script
 
-notebooks/             # Jupyter notebooks
-└── metrics_analysis.ipynb
+notebooks/
+└── metrics_analysis.ipynb   # Jupyter notebook for metrics analysis
+
+docker-compose.yml    # Compose file for all services
+README.md             # This file
 ```
+
+## 📈 Metrics Generated
+
+- **User Activity**: Page views, interactions
+- **Data Processing**: Records processed, processing time
+- **System Performance**: CPU usage, memory usage
 
 ## 🎯 Key Concepts Demonstrated
 
@@ -76,13 +90,6 @@ notebooks/             # Jupyter notebooks
 - **Grafana**: `http://localhost:3000`
   - Username: `admin`
   - Password: `admin`
-
-## 📈 Metrics Generated
-
-- **User Activity**: Page views, interactions
-- **Data Processing**: Records processed, processing time
-- **System Performance**: CPU usage, memory usage
-- **Business Metrics**: Sales, conversions, revenue
 
 ## 🚀 Next Steps
 
