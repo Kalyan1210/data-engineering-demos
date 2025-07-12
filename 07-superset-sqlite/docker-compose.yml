@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  superset:
+    image: apache/superset:latest
+    ports:
+      - "8088:8088"
+    environment:
+      - SUPERSET_SECRET_KEY=your-secret-key-here
+      - SUPERSET_LOAD_EXAMPLES=yes
+      - SUPERSET_CONFIG_PATH=/app/pythonpath/superset_config.py
+    volumes:
+      - ./data:/app/data
+      - ./configs:/app/pythonpath
+      - superset_home:/app/superset_home
+    depends_on:
+      - sqlite
+    command: >
+      bash -c "
+        superset db upgrade &&
+        superset fab create-admin
+          --username admin
+          --firstname Superset
+          --lastname Admin
+          --email admin@superset.com
+          --password admin &&
+        superset init &&
+        gunicorn
+          --bind 0.0.0.0:8088
+          --workers 10
+          --timeout 120
+          --limit-request-line 0
+          --limit-request-field_size 0
+          superset.app:create_app()
+      "
+
+  sqlite:
+    image: alpine:latest
+    volumes:
+      - ./data/database:/data
+    command: >
+      sh -c "
+        apk add --no-cache sqlite &&
+        sqlite3 /data/business.db < /data/schema.sql &&
+        tail -f /dev/null
+      "
+
+volumes:
+  superset_home: 
