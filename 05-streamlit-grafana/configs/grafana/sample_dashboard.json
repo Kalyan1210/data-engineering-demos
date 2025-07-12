@@ -1,0 +1,34 @@
+{
+  "id": null,
+  "title": "Streamlit Metrics Demo",
+  "timezone": "browser",
+  "panels": [
+    {
+      "type": "timeseries",
+      "title": "Page Views",
+      "targets": [{"expr": "page_views"}],
+      "gridPos": {"x": 0, "y": 0, "w": 12, "h": 8}
+    },
+    {
+      "type": "timeseries",
+      "title": "Records Processed",
+      "targets": [{"expr": "records_processed"}],
+      "gridPos": {"x": 12, "y": 0, "w": 12, "h": 8}
+    },
+    {
+      "type": "timeseries",
+      "title": "CPU Usage (%)",
+      "targets": [{"expr": "cpu_usage"}],
+      "gridPos": {"x": 0, "y": 8, "w": 12, "h": 8}
+    },
+    {
+      "type": "timeseries",
+      "title": "Memory Usage (MB)",
+      "targets": [{"expr": "memory_usage"}],
+      "gridPos": {"x": 12, "y": 8, "w": 12, "h": 8}
+    }
+  ],
+  "schemaVersion": 30,
+  "version": 1,
+  "refresh": "5s"
+} 
