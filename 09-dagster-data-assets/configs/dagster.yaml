@@ -1,0 +1,109 @@
+# Dagster Configuration
+# This file configures the Dagster instance
+
+# Instance configuration
+instance:
+  # Local filesystem storage
+  local_artifact_storage:
+    base_dir: "./data/dagster"
+
+# Run storage
+run_storage:
+  sqlite:
+    base_dir: "./data/dagster/runs"
+
+# Event log storage
+event_log_storage:
+  sqlite:
+    base_dir: "./data/dagster/events"
+
+# Schedule storage
+schedule_storage:
+  sqlite:
+    base_dir: "./data/dagster/schedules"
+
+# Sensor storage
+sensor_storage:
+  sqlite:
+    base_dir: "./data/dagster/sensors"
+
+# Asset storage
+asset_storage:
+  sqlite:
+    base_dir: "./data/dagster/assets"
+
+# Logging configuration
+logging:
+  python_logs:
+    managed_python_loggers:
+      - dagster
+      - dagster.core
+      - dagster.daemon
+    dagster_handler_config:
+      handlers:
+        console:
+          config:
+            log_level: INFO
+        file:
+          config:
+            log_level: INFO
+            filename: "./logs/dagster.log"
+
+# Telemetry (optional)
+telemetry:
+  enabled: false
+
+# Feature flags
+feature_flags:
+  enable_asset_observability: true
+  enable_asset_checks: true
+  enable_asset_auto_materialize: true
+
+# UI configuration
+ui:
+  # Custom branding
+  brand_title: "Data Engineering Demos"
+  brand_logo: null
+  
+  # Feature flags for UI
+  feature_flags:
+    enable_asset_graph: true
+    enable_asset_checks: true
+    enable_asset_observability: true
+
+# Daemon configuration
+daemon:
+  # Run coordinator
+  run_coordinator:
+    module: dagster.core.run_coordinator
+    class: QueuedRunCoordinator
+    config:
+      max_concurrent_runs: 10
+      tag_concurrency_limits: []
+  
+  # Scheduler
+  scheduler:
+    module: dagster.core.scheduler
+    class: DagsterDaemonScheduler
+    config:
+      max_ticks: 100
+      tick_retention_settings:
+        purge_after_days: 7
+  
+  # Sensor
+  sensor:
+    module: dagster.core.sensor
+    class: DagsterDaemonSensor
+    config:
+      max_ticks: 100
+      tick_retention_settings:
+        purge_after_days: 7
+
+# Code locations
+code_locations:
+  - module_name: assets.data_assets
+    working_directory: .
+  - module_name: assets.etl_assets
+    working_directory: .
+  - module_name: assets.analytics_assets
+    working_directory: . 
