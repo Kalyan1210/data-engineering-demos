@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  mlflow:
+    image: python:3.9-slim
+    container_name: mlflow_tracking_demo
+    ports:
+      - "5000:5000"
+    environment:
+      - MLFLOW_TRACKING_URI=http://localhost:5000
+      - MLFLOW_S3_ENDPOINT_URL=http://localhost:9000
+    volumes:
+      - ./models:/opt/mlflow/models
+      - ./mlruns:/opt/mlflow/mlruns
+    command: >
+      bash -c "pip install mlflow && 
+               mlflow server --host 0.0.0.0 --port 5000 --backend-store-uri sqlite:///mlruns.db"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  fastapi:
+    build: .
+    container_name: fastapi_ml_demo
+    ports:
+      - "8000:8000"
+    environment:
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+    volumes:
+      - ./app:/app/app
+      - ./models:/app/models
+    depends_on:
+      mlflow:
+        condition: service_healthy
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+volumes:
+  mlflow_data: 
