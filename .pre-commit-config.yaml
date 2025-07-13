@@ -3,5 +3,5 @@ repos:
     rev: v1.35.1
     hooks:
       - id: yamllint
-        stages: [commit]
+        stages: [pre-commit]
         additional_dependencies: [yamllint] 
