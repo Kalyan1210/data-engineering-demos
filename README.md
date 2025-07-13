@@ -1,5 +1,11 @@
 # Data Engineering Demos
 
+[![CI](https://github.com/Kalyan1210/data-engineering-demos/actions/workflows/compose-lint.yml/badge.svg)](https://github.com/Kalyan1210/data-engineering-demos/actions/workflows/compose-lint.yml)
+![Last commit](https://img.shields.io/github/last-commit/Kalyan1210/data-engineering-demos)
+![License](https://img.shields.io/github/license/Kalyan1210/data-engineering-demos)
+
+**⚡ Ten self-contained, 10-minute tutorials that walk you from zero to a modern data stack: Postgres → dbt → Great Expectations → MLflow → Kafka/Spark → Prefect → Grafana. Clone any folder, run `docker compose up`, and you’re exploring in minutes.**
+
 A collection of 10-minute demos showcasing modern data engineering tools and practices.
 
 ## 🚀 Demo Topics
@@ -16,6 +22,7 @@ A collection of 10-minute demos showcasing modern data engineering tools and pra
 | 08  | Prefect 3 local deployment | ✅ Complete | Workflow orchestration |
 | 09  | Dagster data assets | ✅ Complete | Asset-based orchestration & lineage |
 | 10  | Snowflake + dbt Cloud | ✅ Complete | Cloud data warehouse & transformation |
+
 ## 🚀 Quick Start
 
 Each demo is self-contained and can be run independently:
