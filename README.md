@@ -15,7 +15,7 @@ A collection of 10-minute demos showcasing modern data engineering tools and pra
 | 07  | Superset + SQLite | ✅ Complete | Business intelligence |
 | 08  | Prefect 3 local deployment | ✅ Complete | Workflow orchestration |
 | 09  | Dagster data assets | ✅ Complete | Asset-based orchestration & lineage |
-| 10  | Snowflake + dbt Cloud | 🚧 In Progress | Cloud data warehouse & transformation |
+| 10  | Snowflake + dbt Cloud | 🦾 In Progress | Cloud data warehouse & transformation |
 
 ## 🚀 Quick Start
 
