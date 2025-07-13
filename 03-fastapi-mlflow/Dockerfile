@@ -1,10 +1,9 @@
-FROM python:3.9-slim
+FROM python:3.9-slim@sha256:2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2
 
 WORKDIR /app
 
 # Install system dependencies
-RUN apt-get update && apt-get install -y \
-    curl \
+RUN apt-get update && apt-get install -y --no-install-recommends curl=7.74.0-1.3+deb11u5 \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements and install Python dependencies
