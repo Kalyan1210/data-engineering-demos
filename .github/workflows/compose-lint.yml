@@ -47,4 +47,3 @@ jobs:
           find . -type f -iname 'docker-compose.yml' | while read f; do
             echo "Validating $f";
             docker compose -f "$f" config > /dev/null;
-          done 
