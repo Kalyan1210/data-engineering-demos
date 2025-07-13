@@ -1,0 +1,50 @@
+name: Compose & Lint
+
+on:
+  push:
+    paths:
+      - '**/docker-compose.yml'
+      - '**/Dockerfile'
+      - '**.yml'
+      - '**.yaml'
+      - '.github/workflows/compose-lint.yml'
+  pull_request:
+    paths:
+      - '**/docker-compose.yml'
+      - '**/Dockerfile'
+      - '**.yml'
+      - '**.yaml'
+      - '.github/workflows/compose-lint.yml'
+
+jobs:
+  compose-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install yamllint & hadolint
+        run: |
+          pip install yamllint
+          sudo wget -O /usr/local/bin/hadolint https://github.com/hadolint/hadolint/releases/latest/download/hadolint-Linux-x86_64
+          sudo chmod +x /usr/local/bin/hadolint
+
+      - name: Lint all Dockerfiles
+        run: |
+          find . -type f -iname 'Dockerfile' | xargs -r hadolint
+
+      - name: Lint all YAML files
+        run: |
+          find . -type f \( -iname '*.yml' -o -iname '*.yaml' \) | xargs -r yamllint
+
+      - name: Validate all docker-compose.yml files
+        run: |
+          find . -type f -iname 'docker-compose.yml' | while read f; do
+            echo "Validating $f";
+            docker compose -f "$f" config > /dev/null;
+          done 
