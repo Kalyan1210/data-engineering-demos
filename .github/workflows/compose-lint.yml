@@ -48,7 +48,7 @@ jobs:
       # ───────── Lint YAML ─────────
       - name: Lint YAML (warnings allowed)
         run: |
-          yamllint -d "{extends: relaxed, rules: {line-length: disable}}" .
+          run: yamllint .
         # yamllint exits 1 on error by default; relaxed preset keeps most issues at warning-level
 
       # ───────── Validate compose files ─────────
