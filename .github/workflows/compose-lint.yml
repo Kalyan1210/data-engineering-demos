@@ -1,21 +1,14 @@
+---
 # Manual trigger test 2024-06-12
 name: Compose & Lint
 
 on:
   push:
-    paths:
-      - '**/docker-compose.yml'
-      - '**/Dockerfile'
-      - '**/*.yml'
-      - '**/*.yaml'
-      - '.github/workflows/compose-lint.yml'
+    branches:
+      - main
   pull_request:
-    paths:
-      - '**/docker-compose.yml'
-      - '**/Dockerfile'
-      - '**/*.yml'
-      - '**/*.yaml'
-      - '.github/workflows/compose-lint.yml'
+    branches:
+      - main
 
 jobs:
   compose-lint:
@@ -48,7 +41,7 @@ jobs:
       # ───────── Lint YAML ─────────
       - name: Lint YAML (warnings allowed)
         run: |
-          run: yamllint .
+          yamllint .
         # yamllint exits 1 on error by default; relaxed preset keeps most issues at warning-level
 
       # ───────── Validate compose files ─────────
@@ -57,4 +50,4 @@ jobs:
           find . -type f -iname 'docker-compose.yml' | while read f; do
             echo "▶️  docker compose -f $f config"
             docker compose -f "$f" config >/dev/null
-          done
+          done 
